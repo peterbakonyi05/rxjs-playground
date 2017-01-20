@@ -1,23 +1,24 @@
-const _ = require('lodash');
 const Rx = require('rxjs');
 
-const batchBufferIn$ = new Rx.Subject();
+const subject$ = new Rx.Subject();
 
-const batchBufferOut$ = batchBufferIn$
-	.asObservable()
-	.do((request) => {
-		console.log(request);
-	})
-	.share()
-	.subscribe();
+Rx.Observable.from([0, 200])
+	.takeUntil(subject$.asObservable())
+	.subscribe(
+		v => console.log("a emit", v),
+		null,
+		() => console.log("a complete")
+	);
+
+subject$.next(1);
+
+const b$ = subject$.asObservable()
+	.take(1)
+	.subscribe(
+		v => console.log("b emit", v),
+		null,
+		() => console.log("b complete")
+	);
 
 
-batchBufferIn$.subscribe((data) => {
-	console.log(data);
-});
-
-
-batchBufferIn$.next("500");
-batchBufferIn$.next("501");
-batchBufferIn$.next("502");
-batchBufferIn$.next("503");
+setTimeout(() => subject$.next(2), 2000);
