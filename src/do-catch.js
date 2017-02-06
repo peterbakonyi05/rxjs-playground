@@ -8,6 +8,10 @@ Rx.Observable.of("value")
 	.do(() => {
 		throw new Error("Error")
 	})
+	.do(() => {
+		console.log("second do");
+		throw new Error("Error")
+	})
 	.catch((e) => Rx.Observable.of("caught value"))
 	.subscribe(
 		data => console.log(`DATA: ${data}`),

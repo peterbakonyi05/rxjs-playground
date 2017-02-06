@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "exectimer": "^2.0.2",
     "nodemon": "^1.10.0"
   },
   "dependencies": {
