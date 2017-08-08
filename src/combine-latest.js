@@ -22,3 +22,8 @@ Rx.Observable.combineLatest(
 	Rx.Observable.from([1, 2, 3])
 )
 	.subscribe(data => console.log(data));
+
+
+Rx.Observable.from([1, 2, 3])
+	.combineLatest(Rx.Observable.from([4, 5, 6]))
+	.subscribe(d => console.log(d));
