@@ -11,10 +11,11 @@
   "license": "ISC",
   "devDependencies": {
     "exectimer": "^2.0.2",
-    "nodemon": "^1.10.0"
+    "nodemon": "^1.12.0"
   },
   "dependencies": {
-    "lodash": "^4.15.0",
-    "rxjs": "5.0.0-beta.12"
+    "lodash": "^4.17.4",
+    "rxjs": "^6.2.0",
+    "zone.js": "^0.8.20"
   }
 }

@@ -5,10 +5,13 @@
  * 
  * -"a"-"b"-"c"
  */
-const Rx = require('rxjs');
+const { from, of } = require('rxjs');
+const { mergeMap } = require('rxjs/operators');
 
-Rx.Observable.from([["a", "b", "c"], ["d", "e", "f"]]) // -[a, b, c]-[d, e, f]-
-	.switchMap(items => items) // -a-b-c-d-e-f-
+from([1])
+	.pipe(
+		mergeMap(() => from([1, of(2)]))
+	)
 	.subscribe(
 		d => console.log(d)
 	);

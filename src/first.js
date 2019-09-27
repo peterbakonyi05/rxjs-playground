@@ -5,13 +5,19 @@
  * OUTPUT: "complete"
  */
 
-const Rx = require('rxjs');
+const { combineLatest, interval } = require('rxjs');
+const { first, tap, mergeMap } = require('rxjs/operators');
 
-Rx.Observable.interval(500)
-	.first()
-	.filter(() => false)
-	.subscribe(
-		data => console.log("next", data),
-		err => console.log("err", err),
-		() => console.log("complete")
-	);
+interval(500).pipe(
+    first(),
+    mergeMap(() => combineLatest(
+        interval(1000).pipe(tap(v => console.log(v))),
+        interval(5000).pipe(tap(v => console.log(v)))
+    )),
+    first()
+)
+    .subscribe(
+        data => console.log("next", data),
+        err => console.log("err", err),
+        () => console.log("complete")
+    );

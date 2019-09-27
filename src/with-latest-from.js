@@ -1,7 +1,5 @@
-/**
- * todo: cleanup and document
- */
-const Rx = require('rxjs');
+const { Subject, interval } = require('rxjs');
+const { tap, withLatestFrom } = require('rxjs/operators');
 
 
 // Rx.Observable.interval(500)
@@ -10,13 +8,17 @@ const Rx = require('rxjs');
 // 		console.log(data);
 // 	})
 
+const subject = new Subject();
+const obs = subject.asObservable().pipe(tap(d => console.log(d)));
 
 // todo: make one where the issue is demonstrated
-Rx.Observable.interval(500)
-	.mergeMap(outerData => Rx.Observable.interval(900)
-		.first()
-		.map(innerData => [outerData, innerData])
+interval(2000)
+	.pipe(
+		withLatestFrom(obs)
 	)
 	.subscribe(data => {
 		console.log(data);
 	});
+
+let i = 0;
+setInterval(() => subject.next(i++), 200);
